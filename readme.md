@@ -73,7 +73,7 @@ Resting_Paradigm/
    | participant            | Participant ID                             |            |
    | gender                 | Participant gender                         | `f`        |
    | date_of_birth          | Date of birth (DD.MM.YYYY)                 |            |
-   | ethnicity              | Participant ethnicity                      | `asian`    |
+   | ethnicity              | Participant ethnicity                      |            |
    | diagnosis              | Clinical group label                       | `control`  |
    | artifact_recording     | Run artifact phase (1 = yes, 0 = no)       | `1`        |
    | eyesclosed_recording   | Run eyes-closed phase (1 = yes, 0 = no)    | `1`        |
@@ -83,8 +83,8 @@ Resting_Paradigm/
    data/<participant>_resting_task_<version>_<phases>_<date>
    ```
    where `<phases>` encodes which phases were run:
-   - `eyeop_eyecl_`: recording also contains an eyes closed part
-   - `eyeop_artfrec_`: recording also contains an artifact recording
+   - `eyeop_eyecl`: recording also contains an eyes closed part
+   - `eyeop_artfrec`: recording also contains an artifact recording
    - `eyeop_eyecl_artfrec`: reording contains all parts
 
 ## Customization
