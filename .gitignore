@@ -1,0 +1,14 @@
+# Participant data
+data/
+
+# PsychoPy auto-generated last-run scripts
+*_lastrun.py
+
+# PsychoPy cache and logs
+__pycache__/
+*.pyc
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
