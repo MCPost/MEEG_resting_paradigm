@@ -1,8 +1,8 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2021.2.2),
-    on März 06, 2026, at 16:28
+    on March 09, 2026, at 18:23
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -29,6 +29,9 @@ import sys  # to get file system encoding
 
 from psychopy.hardware import keyboard
 
+# import re for some text substitutions
+import re
+
 # Additional Info for data file name
 def add_info(expInfo):
     out = 'eyeop'
@@ -46,7 +49,7 @@ os.chdir(_thisDir)
 # Store info about the experiment session
 psychopyVersion = '2021.2.2'
 expName = 'resting_task_v2021'  # from the Builder filename that created this script
-expInfo = {'participant': '', 'gender': 'f', 'date_of_birth': 'DD.MM.YYYY', 'ethnicity': 'asian', 'diagnosis': 'control', 'artifact_recording': '1', 'eyesclosed_recording': '1'}
+expInfo = {'participant': '', 'gender': 'f', 'date_of_birth': 'DD.MM.YYYY', 'ethnicity': '', 'diagnosis': 'control', 'artifact_recording': '1', 'eyesclosed_recording': '1'}
 dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
 if dlg.OK == False:
     core.quit()  # user pressed cancel
@@ -60,7 +63,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s_%s' % (expInfo['participant'], ex
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='E:\\Christopher\\ownCloud_MPI_GWDG\\Side_Projects\\Resting_Paradigm\\resting_task_v2021.py',
+    originPath='C:\\Users\\chris\\ownCloud - postzich@cbs.mpg.de@owncloud.gwdg.de\\Side_Projects\\Resting_Paradigm\\resting_task_v2021.py',
     savePickle=True, saveWideText=False,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -74,7 +77,7 @@ frameTolerance = 0.001  # how close to onset before 'same' frame
 
 # Setup the Window
 win = visual.Window(
-    size=[1920, 1080], fullscr=False, screen=0, 
+    size=[1536, 864], fullscr=False, screen=0, 
     winType='pyglet', allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True, 
@@ -95,7 +98,8 @@ defaultKeyboard = keyboard.Keyboard()
 # Initialize components for Routine "welcome_screen"
 welcome_screenClock = core.Clock()
 # Change this instruction according to your setup!
-continue_with_button_text = 'Continue with SPACE'
+continue_button = 'space'
+continue_with_button_text = 'Weiter mit der Leertaste...'
 welcome_screen_text = visual.TextStim(win=win, name='welcome_screen_text',
     text='Herzlich Willkommen und vielen Dank für Ihre Teilnahme an diesem Experiment!',
     font='Arial',
@@ -106,7 +110,7 @@ welcome_screen_text = visual.TextStim(win=win, name='welcome_screen_text',
 welcome_screen_cwb_text = visual.TextStim(win=win, name='welcome_screen_cwb_text',
     text='',
     font='Arial',
-    pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
+    pos=(0, -0.45), height=0.03, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-2.0);
@@ -115,7 +119,7 @@ welcome_screen_keyboard = keyboard.Keyboard()
 # Initialize components for Routine "artifact_instruction"
 artifact_instructionClock = core.Clock()
 artifact_instruction_text = visual.TextStim(win=win, name='artifact_instruction_text',
-    text='Im Folgenden würden wir Sie bitten ein paar Störquellen aufzunehmen. Dieses Signal hilft uns später im richtigen Signal diese Störungen zu eliminieren.',
+    text='Zu Beginn der Messung würden wir Sie bitten ein paar Störquellen aufzunehmen. Diese Aufnahmen helfen uns später Störungen aus dem Signal zu entfernen.\n',
     font='Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
@@ -124,7 +128,7 @@ artifact_instruction_text = visual.TextStim(win=win, name='artifact_instruction_
 artifact_instruction_cwb_text = visual.TextStim(win=win, name='artifact_instruction_cwb_text',
     text='',
     font='Arial',
-    pos=(0, -0.46), height=0.03, wrapWidth=None, ori=0.0, 
+    pos=(0, -0.45), height=0.03, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-2.0);
@@ -133,26 +137,17 @@ artifact_instruction_keyboard = keyboard.Keyboard()
 # Initialize components for Routine "artifact_explainer"
 artifact_explainerClock = core.Clock()
 artifact_running = False
-artifact_explainer_textbox = visual.TextBox2(
-     win, text='', font='Arial',
-     pos=(0, 0),     letterHeight=0.05,
-     size=(None, None), borderWidth=2.0,
-     color='white', colorSpace='rgb',
-     opacity=None,
-     bold=False, italic=False,
-     lineSpacing=1.0,
-     padding=0.0,
-     anchor='center',
-     fillColor=None, borderColor=None,
-     flipHoriz=False, flipVert=False,
-     editable=False,
-     name='artifact_explainer_textbox',
-     autoLog=True,
-)
-artifact_explainer_cwb_text = visual.TextStim(win=win, name='artifact_explainer_cwb_text',
-    text=continue_with_button_text,
+artifact_explainer_text = visual.TextStim(win=win, name='artifact_explainer_text',
+    text='',
     font='Arial',
-    pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
+    pos=(0, 0), height=0.04, wrapWidth=1.3, ori=0.0, 
+    color='white', colorSpace='rgb', opacity=None, 
+    languageStyle='LTR',
+    depth=-1.0);
+artifact_explainer_cwb_text = visual.TextStim(win=win, name='artifact_explainer_cwb_text',
+    text='',
+    font='Arial',
+    pos=(0, -0.45), height=0.03, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-2.0);
@@ -180,32 +175,26 @@ artifact_recording_text = visual.TextStim(win=win, name='artifact_recording_text
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-1.0);
-artifact_recording_empty_text = visual.TextStim(win=win, name='artifact_recording_empty_text',
+
+# Initialize components for Routine "short_blank"
+short_blankClock = core.Clock()
+short_blank_text = visual.TextStim(win=win, name='short_blank_text',
     text=None,
-    font='Arial',
+    font='Open Sans',
     pos=(0, 0), height=0.0, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
-    depth=-2.0);
+    depth=-1.0);
 
 # Initialize components for Routine "eyesopen_instruction"
 eyesopen_instructionClock = core.Clock()
-eyesopen_instruction_textbox = visual.TextBox2(
-     win, text='', font='Arial',
-     pos=(0, 0),     letterHeight=0.05,
-     size=(None, None), borderWidth=2.0,
-     color='white', colorSpace='rgb',
-     opacity=None,
-     bold=False, italic=False,
-     lineSpacing=1.0,
-     padding=0.0,
-     anchor='center',
-     fillColor=None, borderColor=None,
-     flipHoriz=True, flipVert=False,
-     editable=False,
-     name='eyesopen_instruction_textbox',
-     autoLog=True,
-)
+eyesopen_instruction_text = visual.TextStim(win=win, name='eyesopen_instruction_text',
+    text='',
+    font='Arial',
+    pos=(0, 0), height=0.04, wrapWidth=1.3, ori=0.0, 
+    color='white', colorSpace='rgb', opacity=None, 
+    languageStyle='LTR',
+    depth=-1.0);
 eyesopen_instruction_cwb_text = visual.TextStim(win=win, name='eyesopen_instruction_cwb_text',
     text='',
     font='Arial',
@@ -230,36 +219,40 @@ countdown_text = visual.TextStim(win=win, name='countdown_text',
 
 # Initialize components for Routine "eyesopen_recording"
 eyesopen_recordingClock = core.Clock()
+# Duration of Eyes open resting measure in seconds
+eyesopen_duration = 300 # 300 s = 5 min
 eyesopen_recording_polygon = visual.ShapeStim(
     win=win, name='eyesopen_recording_polygon', vertices='cross',
     size=(0.05, 0.05),
     ori=0.0, pos=(0, 0),
     lineWidth=1.0,     colorSpace='rgb',  lineColor='white', fillColor='white',
     opacity=None, depth=-1.0, interpolate=True)
+eyesopen_recording_skip_keyboard = keyboard.Keyboard()
+
+# Initialize components for Routine "short_blank"
+short_blankClock = core.Clock()
+short_blank_text = visual.TextStim(win=win, name='short_blank_text',
+    text=None,
+    font='Open Sans',
+    pos=(0, 0), height=0.0, wrapWidth=None, ori=0.0, 
+    color='white', colorSpace='rgb', opacity=None, 
+    languageStyle='LTR',
+    depth=-1.0);
 
 # Initialize components for Routine "eyesclosed_instruction"
 eyesclosed_instructionClock = core.Clock()
 eyesclosed_running = False
-eyesclosed_instruction_textbox = visual.TextBox2(
-     win, text='', font='Arial',
-     pos=(0, 0),     letterHeight=0.05,
-     size=(None, None), borderWidth=2.0,
-     color='white', colorSpace='rgb',
-     opacity=None,
-     bold=False, italic=False,
-     lineSpacing=1.0,
-     padding=0.0,
-     anchor='center',
-     fillColor=None, borderColor=None,
-     flipHoriz=False, flipVert=False,
-     editable=False,
-     name='eyesclosed_instruction_textbox',
-     autoLog=True,
-)
-eyesclosed_instruction_cwb_text = visual.TextStim(win=win, name='eyesclosed_instruction_cwb_text',
-    text=continue_with_button_text,
+eyesclosed_instruction_text = visual.TextStim(win=win, name='eyesclosed_instruction_text',
+    text='',
     font='Arial',
-    pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+    pos=(0, 0), height=0.04, wrapWidth=1.3, ori=0.0, 
+    color='white', colorSpace='rgb', opacity=None, 
+    languageStyle='LTR',
+    depth=-1.0);
+eyesclosed_instruction_cwb_text = visual.TextStim(win=win, name='eyesclosed_instruction_cwb_text',
+    text='',
+    font='Arial',
+    pos=(0, -0.45), height=0.03, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-2.0);
@@ -280,6 +273,8 @@ countdown_text = visual.TextStim(win=win, name='countdown_text',
 
 # Initialize components for Routine "eyesclosed_recording"
 eyesclosed_recordingClock = core.Clock()
+# Duration of Eyes closed resting measure in seconds
+eyesclosed_duration = 300 # 300 s = 5 min
 eyesclosed_recording_polygon = visual.ShapeStim(
     win=win, name='eyesclosed_recording_polygon', vertices='cross',
     size=(0.05, 0.05),
@@ -292,6 +287,17 @@ eyesclosed_recording_start_sound.setVolume(0.2)
 eyesclosed_recording_stop_sound = sound.Sound('220', secs=1.0, stereo=True, hamming=True,
     name='eyesclosed_recording_stop_sound')
 eyesclosed_recording_stop_sound.setVolume(0.2)
+eyesclosed_recording_skip_keyboard = keyboard.Keyboard()
+
+# Initialize components for Routine "short_blank"
+short_blankClock = core.Clock()
+short_blank_text = visual.TextStim(win=win, name='short_blank_text',
+    text=None,
+    font='Open Sans',
+    pos=(0, 0), height=0.0, wrapWidth=None, ori=0.0, 
+    color='white', colorSpace='rgb', opacity=None, 
+    languageStyle='LTR',
+    depth=-1.0);
 
 # Initialize components for Routine "goodbye_screen"
 goodbye_screenClock = core.Clock()
@@ -305,7 +311,7 @@ goodbye_screen_text = visual.TextStim(win=win, name='goodbye_screen_text',
 goodbye_screen_cwb_text = visual.TextStim(win=win, name='goodbye_screen_cwb_text',
     text='',
     font='Arial',
-    pos=(0, -0.45), height=0.05, wrapWidth=None, ori=0.0, 
+    pos=(0, -0.45), height=0.03, wrapWidth=None, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-1.0);
@@ -373,12 +379,21 @@ while continueRoutine:
         welcome_screen_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
         win.timeOnFlip(welcome_screen_keyboard, 'tStartRefresh')  # time at next scr refresh
         welcome_screen_keyboard.status = STARTED
+        # AllowedKeys looks like a variable named `continue_button`
+        if not type(continue_button) in [list, tuple, np.ndarray]:
+            if not isinstance(continue_button, str):
+                logging.error('AllowedKeys variable `continue_button` is not string- or list-like.')
+                core.quit()
+            elif not ',' in continue_button:
+                continue_button = (continue_button,)
+            else:
+                continue_button = eval(continue_button)
         # keyboard checking is just starting
         waitOnFlip = True
         win.callOnFlip(welcome_screen_keyboard.clock.reset)  # t=0 on next screen flip
         win.callOnFlip(welcome_screen_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
     if welcome_screen_keyboard.status == STARTED and not waitOnFlip:
-        theseKeys = welcome_screen_keyboard.getKeys(keyList=['space'], waitRelease=False)
+        theseKeys = welcome_screen_keyboard.getKeys(keyList=list(continue_button), waitRelease=False)
         _welcome_screen_keyboard_allKeys.extend(theseKeys)
         if len(_welcome_screen_keyboard_allKeys):
             welcome_screen_keyboard.keys = _welcome_screen_keyboard_allKeys[-1].name  # just the last key pressed
@@ -426,6 +441,9 @@ routineTimer.reset()
 # ------Prepare to start Routine "artifact_instruction"-------
 continueRoutine = True
 # update component parameters for each repeat
+if not int(expInfo['artifact_recording']):
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
 artifact_instruction_cwb_text.setText(continue_with_button_text)
 artifact_instruction_keyboard.keys = []
 artifact_instruction_keyboard.rt = []
@@ -481,12 +499,21 @@ while continueRoutine:
         artifact_instruction_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
         win.timeOnFlip(artifact_instruction_keyboard, 'tStartRefresh')  # time at next scr refresh
         artifact_instruction_keyboard.status = STARTED
+        # AllowedKeys looks like a variable named `continue_button`
+        if not type(continue_button) in [list, tuple, np.ndarray]:
+            if not isinstance(continue_button, str):
+                logging.error('AllowedKeys variable `continue_button` is not string- or list-like.')
+                core.quit()
+            elif not ',' in continue_button:
+                continue_button = (continue_button,)
+            else:
+                continue_button = eval(continue_button)
         # keyboard checking is just starting
         waitOnFlip = True
         win.callOnFlip(artifact_instruction_keyboard.clock.reset)  # t=0 on next screen flip
         win.callOnFlip(artifact_instruction_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
     if artifact_instruction_keyboard.status == STARTED and not waitOnFlip:
-        theseKeys = artifact_instruction_keyboard.getKeys(keyList=['space'], waitRelease=False)
+        theseKeys = artifact_instruction_keyboard.getKeys(keyList=list(continue_button), waitRelease=False)
         _artifact_instruction_keyboard_allKeys.extend(theseKeys)
         if len(_artifact_instruction_keyboard_allKeys):
             artifact_instruction_keyboard.keys = _artifact_instruction_keyboard_allKeys[-1].name  # just the last key pressed
@@ -557,13 +584,16 @@ for thisLoop_artifact_recording in loop_artifact_recording:
     if not int(expInfo['artifact_recording']):
         continueRoutine = False
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-    artifact_explainer_textbox.reset()
-    artifact_explainer_textbox.setText(text)
+    
+    # Delete formatting instructions if present
+    text = re.sub(r'<.*?>', '', text)
+    artifact_explainer_text.setText(text)
+    artifact_explainer_cwb_text.setText(continue_with_button_text)
     artifact_explainer_keyboard.keys = []
     artifact_explainer_keyboard.rt = []
     _artifact_explainer_keyboard_allKeys = []
     # keep track of which components have finished
-    artifact_explainerComponents = [artifact_explainer_textbox, artifact_explainer_cwb_text, artifact_explainer_keyboard]
+    artifact_explainerComponents = [artifact_explainer_text, artifact_explainer_cwb_text, artifact_explainer_keyboard]
     for thisComponent in artifact_explainerComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -586,14 +616,14 @@ for thisLoop_artifact_recording in loop_artifact_recording:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *artifact_explainer_textbox* updates
-        if artifact_explainer_textbox.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *artifact_explainer_text* updates
+        if artifact_explainer_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            artifact_explainer_textbox.frameNStart = frameN  # exact frame index
-            artifact_explainer_textbox.tStart = t  # local t and not account for scr refresh
-            artifact_explainer_textbox.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(artifact_explainer_textbox, 'tStartRefresh')  # time at next scr refresh
-            artifact_explainer_textbox.setAutoDraw(True)
+            artifact_explainer_text.frameNStart = frameN  # exact frame index
+            artifact_explainer_text.tStart = t  # local t and not account for scr refresh
+            artifact_explainer_text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(artifact_explainer_text, 'tStartRefresh')  # time at next scr refresh
+            artifact_explainer_text.setAutoDraw(True)
         
         # *artifact_explainer_cwb_text* updates
         if artifact_explainer_cwb_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -613,12 +643,21 @@ for thisLoop_artifact_recording in loop_artifact_recording:
             artifact_explainer_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
             win.timeOnFlip(artifact_explainer_keyboard, 'tStartRefresh')  # time at next scr refresh
             artifact_explainer_keyboard.status = STARTED
+            # AllowedKeys looks like a variable named `continue_button`
+            if not type(continue_button) in [list, tuple, np.ndarray]:
+                if not isinstance(continue_button, str):
+                    logging.error('AllowedKeys variable `continue_button` is not string- or list-like.')
+                    core.quit()
+                elif not ',' in continue_button:
+                    continue_button = (continue_button,)
+                else:
+                    continue_button = eval(continue_button)
             # keyboard checking is just starting
             waitOnFlip = True
             win.callOnFlip(artifact_explainer_keyboard.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(artifact_explainer_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if artifact_explainer_keyboard.status == STARTED and not waitOnFlip:
-            theseKeys = artifact_explainer_keyboard.getKeys(keyList=['space'], waitRelease=False)
+            theseKeys = artifact_explainer_keyboard.getKeys(keyList=list(continue_button), waitRelease=False)
             _artifact_explainer_keyboard_allKeys.extend(theseKeys)
             if len(_artifact_explainer_keyboard_allKeys):
                 artifact_explainer_keyboard.keys = _artifact_explainer_keyboard_allKeys[-1].name  # just the last key pressed
@@ -647,8 +686,8 @@ for thisLoop_artifact_recording in loop_artifact_recording:
     for thisComponent in artifact_explainerComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    loop_artifact_recording.addData('artifact_explainer_textbox.started', artifact_explainer_textbox.tStartRefresh)
-    loop_artifact_recording.addData('artifact_explainer_textbox.stopped', artifact_explainer_textbox.tStopRefresh)
+    loop_artifact_recording.addData('artifact_explainer_text.started', artifact_explainer_text.tStartRefresh)
+    loop_artifact_recording.addData('artifact_explainer_text.stopped', artifact_explainer_text.tStopRefresh)
     loop_artifact_recording.addData('artifact_explainer_cwb_text.started', artifact_explainer_cwb_text.tStartRefresh)
     loop_artifact_recording.addData('artifact_explainer_cwb_text.stopped', artifact_explainer_cwb_text.tStopRefresh)
     # check responses
@@ -665,7 +704,11 @@ for thisLoop_artifact_recording in loop_artifact_recording:
     # ------Prepare to start Routine "countdown"-------
     continueRoutine = True
     # update component parameters for each repeat
-    if (not int(expInfo['artifact_recording'])) and (artifact_running) or (eyesclosed_running):
+    if (not int(expInfo['artifact_recording'])) and artifact_running:
+        continueRoutine = False
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    
+    if (not int(expInfo['eyesclosed_recording'])) and eyesclosed_running:
         continueRoutine = False
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
     
@@ -695,7 +738,7 @@ for thisLoop_artifact_recording in loop_artifact_recording:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         if (t >= add_time - frameTolerance):
-            countdown_counter -= 1
+            countdown_counter = np.max([countdown_counter - 1, 1])
             add_time += countdown_time
         
         # *countdown_text* updates
@@ -745,15 +788,14 @@ for thisLoop_artifact_recording in loop_artifact_recording:
     
     # ------Prepare to start Routine "artifact_recording"-------
     continueRoutine = True
-    routineTimer.add(7.000000)
+    routineTimer.add(5.000000)
     # update component parameters for each repeat
-    artifact_running = False
     if not int(expInfo['artifact_recording']):
         continueRoutine = False
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
     artifact_recording_text.setText(short)
     # keep track of which components have finished
-    artifact_recordingComponents = [artifact_recording_text, artifact_recording_empty_text]
+    artifact_recordingComponents = [artifact_recording_text]
     for thisComponent in artifact_recordingComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -793,23 +835,6 @@ for thisLoop_artifact_recording in loop_artifact_recording:
                 win.timeOnFlip(artifact_recording_text, 'tStopRefresh')  # time at next scr refresh
                 artifact_recording_text.setAutoDraw(False)
         
-        # *artifact_recording_empty_text* updates
-        if artifact_recording_empty_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-            # keep track of start time/frame for later
-            artifact_recording_empty_text.frameNStart = frameN  # exact frame index
-            artifact_recording_empty_text.tStart = t  # local t and not account for scr refresh
-            artifact_recording_empty_text.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(artifact_recording_empty_text, 'tStartRefresh')  # time at next scr refresh
-            artifact_recording_empty_text.setAutoDraw(True)
-        if artifact_recording_empty_text.status == STARTED:
-            # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > artifact_recording_empty_text.tStartRefresh + 7.0-frameTolerance:
-                # keep track of stop time/frame for later
-                artifact_recording_empty_text.tStop = t  # not accounting for scr refresh
-                artifact_recording_empty_text.frameNStop = frameN  # exact frame index
-                win.timeOnFlip(artifact_recording_empty_text, 'tStopRefresh')  # time at next scr refresh
-                artifact_recording_empty_text.setAutoDraw(False)
-        
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
             core.quit()
@@ -833,8 +858,85 @@ for thisLoop_artifact_recording in loop_artifact_recording:
             thisComponent.setAutoDraw(False)
     loop_artifact_recording.addData('artifact_recording_text.started', artifact_recording_text.tStartRefresh)
     loop_artifact_recording.addData('artifact_recording_text.stopped', artifact_recording_text.tStopRefresh)
-    loop_artifact_recording.addData('artifact_recording_empty_text.started', artifact_recording_empty_text.tStartRefresh)
-    loop_artifact_recording.addData('artifact_recording_empty_text.stopped', artifact_recording_empty_text.tStopRefresh)
+    
+    # ------Prepare to start Routine "short_blank"-------
+    continueRoutine = True
+    routineTimer.add(2.000000)
+    # update component parameters for each repeat
+    if (not int(expInfo['artifact_recording'])) and artifact_running:
+        continueRoutine = False
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    
+    if (not int(expInfo['eyesclosed_recording'])) and eyesclosed_running:
+        continueRoutine = False
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    
+    artifact_running = False
+    eyesclosed_running = False
+    # keep track of which components have finished
+    short_blankComponents = [short_blank_text]
+    for thisComponent in short_blankComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    short_blankClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
+    frameN = -1
+    
+    # -------Run Routine "short_blank"-------
+    while continueRoutine and routineTimer.getTime() > 0:
+        # get current time
+        t = short_blankClock.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=short_blankClock)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *short_blank_text* updates
+        if short_blank_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            short_blank_text.frameNStart = frameN  # exact frame index
+            short_blank_text.tStart = t  # local t and not account for scr refresh
+            short_blank_text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(short_blank_text, 'tStartRefresh')  # time at next scr refresh
+            short_blank_text.setAutoDraw(True)
+        if short_blank_text.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > short_blank_text.tStartRefresh + 2.0-frameTolerance:
+                # keep track of stop time/frame for later
+                short_blank_text.tStop = t  # not accounting for scr refresh
+                short_blank_text.frameNStop = frameN  # exact frame index
+                win.timeOnFlip(short_blank_text, 'tStopRefresh')  # time at next scr refresh
+                short_blank_text.setAutoDraw(False)
+        
+        # check for quit (typically the Esc key)
+        if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in short_blankComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # -------Ending Routine "short_blank"-------
+    for thisComponent in short_blankComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    loop_artifact_recording.addData('short_blank_text.started', short_blank_text.tStartRefresh)
+    loop_artifact_recording.addData('short_blank_text.stopped', short_blank_text.tStopRefresh)
     thisExp.nextEntry()
     
 # completed 1.0 repeats of 'loop_artifact_recording'
@@ -862,14 +964,15 @@ for thisLoop_eyesopen_instruction in loop_eyesopen_instruction:
     # ------Prepare to start Routine "eyesopen_instruction"-------
     continueRoutine = True
     # update component parameters for each repeat
-    eyesopen_instruction_textbox.reset()
-    eyesopen_instruction_textbox.setText(text)
-    eyesopen_instruction_cwb_text.setText('Any text\n\nincluding line breaks')
+    # Delete formatting instructions if present
+    text = re.sub(r'<.*?>', '', text)
+    eyesopen_instruction_text.setText(text)
+    eyesopen_instruction_cwb_text.setText(continue_with_button_text)
     eyesopen_instruction_keyboard.keys = []
     eyesopen_instruction_keyboard.rt = []
     _eyesopen_instruction_keyboard_allKeys = []
     # keep track of which components have finished
-    eyesopen_instructionComponents = [eyesopen_instruction_textbox, eyesopen_instruction_cwb_text, eyesopen_instruction_keyboard]
+    eyesopen_instructionComponents = [eyesopen_instruction_text, eyesopen_instruction_cwb_text, eyesopen_instruction_keyboard]
     for thisComponent in eyesopen_instructionComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -892,14 +995,14 @@ for thisLoop_eyesopen_instruction in loop_eyesopen_instruction:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *eyesopen_instruction_textbox* updates
-        if eyesopen_instruction_textbox.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *eyesopen_instruction_text* updates
+        if eyesopen_instruction_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            eyesopen_instruction_textbox.frameNStart = frameN  # exact frame index
-            eyesopen_instruction_textbox.tStart = t  # local t and not account for scr refresh
-            eyesopen_instruction_textbox.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(eyesopen_instruction_textbox, 'tStartRefresh')  # time at next scr refresh
-            eyesopen_instruction_textbox.setAutoDraw(True)
+            eyesopen_instruction_text.frameNStart = frameN  # exact frame index
+            eyesopen_instruction_text.tStart = t  # local t and not account for scr refresh
+            eyesopen_instruction_text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(eyesopen_instruction_text, 'tStartRefresh')  # time at next scr refresh
+            eyesopen_instruction_text.setAutoDraw(True)
         
         # *eyesopen_instruction_cwb_text* updates
         if eyesopen_instruction_cwb_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -919,12 +1022,21 @@ for thisLoop_eyesopen_instruction in loop_eyesopen_instruction:
             eyesopen_instruction_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
             win.timeOnFlip(eyesopen_instruction_keyboard, 'tStartRefresh')  # time at next scr refresh
             eyesopen_instruction_keyboard.status = STARTED
+            # AllowedKeys looks like a variable named `continue_button`
+            if not type(continue_button) in [list, tuple, np.ndarray]:
+                if not isinstance(continue_button, str):
+                    logging.error('AllowedKeys variable `continue_button` is not string- or list-like.')
+                    core.quit()
+                elif not ',' in continue_button:
+                    continue_button = (continue_button,)
+                else:
+                    continue_button = eval(continue_button)
             # keyboard checking is just starting
             waitOnFlip = True
             win.callOnFlip(eyesopen_instruction_keyboard.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(eyesopen_instruction_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if eyesopen_instruction_keyboard.status == STARTED and not waitOnFlip:
-            theseKeys = eyesopen_instruction_keyboard.getKeys(keyList=['space'], waitRelease=False)
+            theseKeys = eyesopen_instruction_keyboard.getKeys(keyList=list(continue_button), waitRelease=False)
             _eyesopen_instruction_keyboard_allKeys.extend(theseKeys)
             if len(_eyesopen_instruction_keyboard_allKeys):
                 eyesopen_instruction_keyboard.keys = _eyesopen_instruction_keyboard_allKeys[-1].name  # just the last key pressed
@@ -953,8 +1065,8 @@ for thisLoop_eyesopen_instruction in loop_eyesopen_instruction:
     for thisComponent in eyesopen_instructionComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    loop_eyesopen_instruction.addData('eyesopen_instruction_textbox.started', eyesopen_instruction_textbox.tStartRefresh)
-    loop_eyesopen_instruction.addData('eyesopen_instruction_textbox.stopped', eyesopen_instruction_textbox.tStopRefresh)
+    loop_eyesopen_instruction.addData('eyesopen_instruction_text.started', eyesopen_instruction_text.tStartRefresh)
+    loop_eyesopen_instruction.addData('eyesopen_instruction_text.stopped', eyesopen_instruction_text.tStopRefresh)
     loop_eyesopen_instruction.addData('eyesopen_instruction_cwb_text.started', eyesopen_instruction_cwb_text.tStartRefresh)
     loop_eyesopen_instruction.addData('eyesopen_instruction_cwb_text.stopped', eyesopen_instruction_cwb_text.tStopRefresh)
     # check responses
@@ -975,7 +1087,11 @@ for thisLoop_eyesopen_instruction in loop_eyesopen_instruction:
 # ------Prepare to start Routine "countdown"-------
 continueRoutine = True
 # update component parameters for each repeat
-if (not int(expInfo['artifact_recording'])) and (artifact_running) or (eyesclosed_running):
+if (not int(expInfo['artifact_recording'])) and artifact_running:
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+
+if (not int(expInfo['eyesclosed_recording'])) and eyesclosed_running:
     continueRoutine = False
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
 
@@ -1005,7 +1121,7 @@ while continueRoutine:
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
     if (t >= add_time - frameTolerance):
-        countdown_counter -= 1
+        countdown_counter = np.max([countdown_counter - 1, 1])
         add_time += countdown_time
     
     # *countdown_text* updates
@@ -1055,10 +1171,12 @@ routineTimer.reset()
 
 # ------Prepare to start Routine "eyesopen_recording"-------
 continueRoutine = True
-routineTimer.add(10.000000)
 # update component parameters for each repeat
+eyesopen_recording_skip_keyboard.keys = []
+eyesopen_recording_skip_keyboard.rt = []
+_eyesopen_recording_skip_keyboard_allKeys = []
 # keep track of which components have finished
-eyesopen_recordingComponents = [eyesopen_recording_polygon]
+eyesopen_recordingComponents = [eyesopen_recording_polygon, eyesopen_recording_skip_keyboard]
 for thisComponent in eyesopen_recordingComponents:
     thisComponent.tStart = None
     thisComponent.tStop = None
@@ -1073,7 +1191,7 @@ eyesopen_recordingClock.reset(-_timeToFirstFrame)  # t0 is time of first possibl
 frameN = -1
 
 # -------Run Routine "eyesopen_recording"-------
-while continueRoutine and routineTimer.getTime() > 0:
+while continueRoutine:
     # get current time
     t = eyesopen_recordingClock.getTime()
     tThisFlip = win.getFutureFlipTime(clock=eyesopen_recordingClock)
@@ -1091,12 +1209,34 @@ while continueRoutine and routineTimer.getTime() > 0:
         eyesopen_recording_polygon.setAutoDraw(True)
     if eyesopen_recording_polygon.status == STARTED:
         # is it time to stop? (based on global clock, using actual start)
-        if tThisFlipGlobal > eyesopen_recording_polygon.tStartRefresh + 10.0-frameTolerance:
+        if tThisFlipGlobal > eyesopen_recording_polygon.tStartRefresh + eyesopen_duration-frameTolerance:
             # keep track of stop time/frame for later
             eyesopen_recording_polygon.tStop = t  # not accounting for scr refresh
             eyesopen_recording_polygon.frameNStop = frameN  # exact frame index
             win.timeOnFlip(eyesopen_recording_polygon, 'tStopRefresh')  # time at next scr refresh
             eyesopen_recording_polygon.setAutoDraw(False)
+    
+    # *eyesopen_recording_skip_keyboard* updates
+    waitOnFlip = False
+    if eyesopen_recording_skip_keyboard.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # keep track of start time/frame for later
+        eyesopen_recording_skip_keyboard.frameNStart = frameN  # exact frame index
+        eyesopen_recording_skip_keyboard.tStart = t  # local t and not account for scr refresh
+        eyesopen_recording_skip_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
+        win.timeOnFlip(eyesopen_recording_skip_keyboard, 'tStartRefresh')  # time at next scr refresh
+        eyesopen_recording_skip_keyboard.status = STARTED
+        # keyboard checking is just starting
+        waitOnFlip = True
+        win.callOnFlip(eyesopen_recording_skip_keyboard.clock.reset)  # t=0 on next screen flip
+        win.callOnFlip(eyesopen_recording_skip_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
+    if eyesopen_recording_skip_keyboard.status == STARTED and not waitOnFlip:
+        theseKeys = eyesopen_recording_skip_keyboard.getKeys(keyList=['s'], waitRelease=False)
+        _eyesopen_recording_skip_keyboard_allKeys.extend(theseKeys)
+        if len(_eyesopen_recording_skip_keyboard_allKeys):
+            eyesopen_recording_skip_keyboard.keys = _eyesopen_recording_skip_keyboard_allKeys[-1].name  # just the last key pressed
+            eyesopen_recording_skip_keyboard.rt = _eyesopen_recording_skip_keyboard_allKeys[-1].rt
+            # a response ends the routine
+            continueRoutine = False
     
     # check for quit (typically the Esc key)
     if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1121,6 +1261,96 @@ for thisComponent in eyesopen_recordingComponents:
         thisComponent.setAutoDraw(False)
 thisExp.addData('eyesopen_recording_polygon.started', eyesopen_recording_polygon.tStartRefresh)
 thisExp.addData('eyesopen_recording_polygon.stopped', eyesopen_recording_polygon.tStopRefresh)
+# check responses
+if eyesopen_recording_skip_keyboard.keys in ['', [], None]:  # No response was made
+    eyesopen_recording_skip_keyboard.keys = None
+thisExp.addData('eyesopen_recording_skip_keyboard.keys',eyesopen_recording_skip_keyboard.keys)
+if eyesopen_recording_skip_keyboard.keys != None:  # we had a response
+    thisExp.addData('eyesopen_recording_skip_keyboard.rt', eyesopen_recording_skip_keyboard.rt)
+thisExp.addData('eyesopen_recording_skip_keyboard.started', eyesopen_recording_skip_keyboard.tStartRefresh)
+thisExp.addData('eyesopen_recording_skip_keyboard.stopped', eyesopen_recording_skip_keyboard.tStopRefresh)
+thisExp.nextEntry()
+# the Routine "eyesopen_recording" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
+
+# ------Prepare to start Routine "short_blank"-------
+continueRoutine = True
+routineTimer.add(2.000000)
+# update component parameters for each repeat
+if (not int(expInfo['artifact_recording'])) and artifact_running:
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+
+if (not int(expInfo['eyesclosed_recording'])) and eyesclosed_running:
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+
+artifact_running = False
+eyesclosed_running = False
+# keep track of which components have finished
+short_blankComponents = [short_blank_text]
+for thisComponent in short_blankComponents:
+    thisComponent.tStart = None
+    thisComponent.tStop = None
+    thisComponent.tStartRefresh = None
+    thisComponent.tStopRefresh = None
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+# reset timers
+t = 0
+_timeToFirstFrame = win.getFutureFlipTime(clock="now")
+short_blankClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
+frameN = -1
+
+# -------Run Routine "short_blank"-------
+while continueRoutine and routineTimer.getTime() > 0:
+    # get current time
+    t = short_blankClock.getTime()
+    tThisFlip = win.getFutureFlipTime(clock=short_blankClock)
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *short_blank_text* updates
+    if short_blank_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # keep track of start time/frame for later
+        short_blank_text.frameNStart = frameN  # exact frame index
+        short_blank_text.tStart = t  # local t and not account for scr refresh
+        short_blank_text.tStartRefresh = tThisFlipGlobal  # on global time
+        win.timeOnFlip(short_blank_text, 'tStartRefresh')  # time at next scr refresh
+        short_blank_text.setAutoDraw(True)
+    if short_blank_text.status == STARTED:
+        # is it time to stop? (based on global clock, using actual start)
+        if tThisFlipGlobal > short_blank_text.tStartRefresh + 2.0-frameTolerance:
+            # keep track of stop time/frame for later
+            short_blank_text.tStop = t  # not accounting for scr refresh
+            short_blank_text.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(short_blank_text, 'tStopRefresh')  # time at next scr refresh
+            short_blank_text.setAutoDraw(False)
+    
+    # check for quit (typically the Esc key)
+    if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in short_blankComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "short_blank"-------
+for thisComponent in short_blankComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+thisExp.addData('short_blank_text.started', short_blank_text.tStartRefresh)
+thisExp.addData('short_blank_text.stopped', short_blank_text.tStopRefresh)
 
 # set up handler to look after randomisation of conditions etc
 loop_eyesclosed_instruction = data.TrialHandler(nReps=1.0, method='sequential', 
@@ -1148,13 +1378,16 @@ for thisLoop_eyesclosed_instruction in loop_eyesclosed_instruction:
     if not int(expInfo['eyesclosed_recording']):
         continueRoutine = False
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-    eyesclosed_instruction_textbox.reset()
-    eyesclosed_instruction_textbox.setText(text)
+    
+    # Delete formatting instructions if present
+    text = re.sub(r'<.*?>', '', text)
+    eyesclosed_instruction_text.setText(text)
+    eyesclosed_instruction_cwb_text.setText(continue_with_button_text)
     eyesclosed_instruction_keyboard.keys = []
     eyesclosed_instruction_keyboard.rt = []
     _eyesclosed_instruction_keyboard_allKeys = []
     # keep track of which components have finished
-    eyesclosed_instructionComponents = [eyesclosed_instruction_textbox, eyesclosed_instruction_cwb_text, eyesclosed_instruction_keyboard]
+    eyesclosed_instructionComponents = [eyesclosed_instruction_text, eyesclosed_instruction_cwb_text, eyesclosed_instruction_keyboard]
     for thisComponent in eyesclosed_instructionComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -1177,14 +1410,14 @@ for thisLoop_eyesclosed_instruction in loop_eyesclosed_instruction:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *eyesclosed_instruction_textbox* updates
-        if eyesclosed_instruction_textbox.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *eyesclosed_instruction_text* updates
+        if eyesclosed_instruction_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            eyesclosed_instruction_textbox.frameNStart = frameN  # exact frame index
-            eyesclosed_instruction_textbox.tStart = t  # local t and not account for scr refresh
-            eyesclosed_instruction_textbox.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(eyesclosed_instruction_textbox, 'tStartRefresh')  # time at next scr refresh
-            eyesclosed_instruction_textbox.setAutoDraw(True)
+            eyesclosed_instruction_text.frameNStart = frameN  # exact frame index
+            eyesclosed_instruction_text.tStart = t  # local t and not account for scr refresh
+            eyesclosed_instruction_text.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(eyesclosed_instruction_text, 'tStartRefresh')  # time at next scr refresh
+            eyesclosed_instruction_text.setAutoDraw(True)
         
         # *eyesclosed_instruction_cwb_text* updates
         if eyesclosed_instruction_cwb_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -1204,12 +1437,21 @@ for thisLoop_eyesclosed_instruction in loop_eyesclosed_instruction:
             eyesclosed_instruction_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
             win.timeOnFlip(eyesclosed_instruction_keyboard, 'tStartRefresh')  # time at next scr refresh
             eyesclosed_instruction_keyboard.status = STARTED
+            # AllowedKeys looks like a variable named `continue_button`
+            if not type(continue_button) in [list, tuple, np.ndarray]:
+                if not isinstance(continue_button, str):
+                    logging.error('AllowedKeys variable `continue_button` is not string- or list-like.')
+                    core.quit()
+                elif not ',' in continue_button:
+                    continue_button = (continue_button,)
+                else:
+                    continue_button = eval(continue_button)
             # keyboard checking is just starting
             waitOnFlip = True
             win.callOnFlip(eyesclosed_instruction_keyboard.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(eyesclosed_instruction_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if eyesclosed_instruction_keyboard.status == STARTED and not waitOnFlip:
-            theseKeys = eyesclosed_instruction_keyboard.getKeys(keyList=['space'], waitRelease=False)
+            theseKeys = eyesclosed_instruction_keyboard.getKeys(keyList=list(continue_button), waitRelease=False)
             _eyesclosed_instruction_keyboard_allKeys.extend(theseKeys)
             if len(_eyesclosed_instruction_keyboard_allKeys):
                 eyesclosed_instruction_keyboard.keys = _eyesclosed_instruction_keyboard_allKeys[-1].name  # just the last key pressed
@@ -1238,8 +1480,8 @@ for thisLoop_eyesclosed_instruction in loop_eyesclosed_instruction:
     for thisComponent in eyesclosed_instructionComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    loop_eyesclosed_instruction.addData('eyesclosed_instruction_textbox.started', eyesclosed_instruction_textbox.tStartRefresh)
-    loop_eyesclosed_instruction.addData('eyesclosed_instruction_textbox.stopped', eyesclosed_instruction_textbox.tStopRefresh)
+    loop_eyesclosed_instruction.addData('eyesclosed_instruction_text.started', eyesclosed_instruction_text.tStartRefresh)
+    loop_eyesclosed_instruction.addData('eyesclosed_instruction_text.stopped', eyesclosed_instruction_text.tStopRefresh)
     loop_eyesclosed_instruction.addData('eyesclosed_instruction_cwb_text.started', eyesclosed_instruction_cwb_text.tStartRefresh)
     loop_eyesclosed_instruction.addData('eyesclosed_instruction_cwb_text.stopped', eyesclosed_instruction_cwb_text.tStopRefresh)
     # check responses
@@ -1260,7 +1502,11 @@ for thisLoop_eyesclosed_instruction in loop_eyesclosed_instruction:
 # ------Prepare to start Routine "countdown"-------
 continueRoutine = True
 # update component parameters for each repeat
-if (not int(expInfo['artifact_recording'])) and (artifact_running) or (eyesclosed_running):
+if (not int(expInfo['artifact_recording'])) and artifact_running:
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+
+if (not int(expInfo['eyesclosed_recording'])) and eyesclosed_running:
     continueRoutine = False
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
 
@@ -1290,7 +1536,7 @@ while continueRoutine:
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
     if (t >= add_time - frameTolerance):
-        countdown_counter -= 1
+        countdown_counter = np.max([countdown_counter - 1, 1])
         add_time += countdown_time
     
     # *countdown_text* updates
@@ -1340,9 +1586,7 @@ routineTimer.reset()
 
 # ------Prepare to start Routine "eyesclosed_recording"-------
 continueRoutine = True
-routineTimer.add(10.000000)
 # update component parameters for each repeat
-eyesclosed_running = False
 if not int(expInfo['eyesclosed_recording']):
     continueRoutine = False
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
@@ -1350,8 +1594,11 @@ eyesclosed_recording_start_sound.setSound('660', secs=1.0, hamming=True)
 eyesclosed_recording_start_sound.setVolume(0.2, log=False)
 eyesclosed_recording_stop_sound.setSound('220', secs=1.0, hamming=True)
 eyesclosed_recording_stop_sound.setVolume(0.2, log=False)
+eyesclosed_recording_skip_keyboard.keys = []
+eyesclosed_recording_skip_keyboard.rt = []
+_eyesclosed_recording_skip_keyboard_allKeys = []
 # keep track of which components have finished
-eyesclosed_recordingComponents = [eyesclosed_recording_polygon, eyesclosed_recording_start_sound, eyesclosed_recording_stop_sound]
+eyesclosed_recordingComponents = [eyesclosed_recording_polygon, eyesclosed_recording_start_sound, eyesclosed_recording_stop_sound, eyesclosed_recording_skip_keyboard]
 for thisComponent in eyesclosed_recordingComponents:
     thisComponent.tStart = None
     thisComponent.tStop = None
@@ -1366,7 +1613,7 @@ eyesclosed_recordingClock.reset(-_timeToFirstFrame)  # t0 is time of first possi
 frameN = -1
 
 # -------Run Routine "eyesclosed_recording"-------
-while continueRoutine and routineTimer.getTime() > 0:
+while continueRoutine:
     # get current time
     t = eyesclosed_recordingClock.getTime()
     tThisFlip = win.getFutureFlipTime(clock=eyesclosed_recordingClock)
@@ -1384,7 +1631,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         eyesclosed_recording_polygon.setAutoDraw(True)
     if eyesclosed_recording_polygon.status == STARTED:
         # is it time to stop? (based on global clock, using actual start)
-        if tThisFlipGlobal > eyesclosed_recording_polygon.tStartRefresh + 10.0-frameTolerance:
+        if tThisFlipGlobal > eyesclosed_recording_polygon.tStartRefresh + eyesclosed_duration-frameTolerance:
             # keep track of stop time/frame for later
             eyesclosed_recording_polygon.tStop = t  # not accounting for scr refresh
             eyesclosed_recording_polygon.frameNStop = frameN  # exact frame index
@@ -1406,7 +1653,7 @@ while continueRoutine and routineTimer.getTime() > 0:
             win.timeOnFlip(eyesclosed_recording_start_sound, 'tStopRefresh')  # time at next scr refresh
             eyesclosed_recording_start_sound.stop()
     # start/stop eyesclosed_recording_stop_sound
-    if eyesclosed_recording_stop_sound.status == NOT_STARTED and tThisFlip >= 9.0-frameTolerance:
+    if eyesclosed_recording_stop_sound.status == NOT_STARTED and tThisFlip >= eyesclosed_duration - 1.0-frameTolerance:
         # keep track of start time/frame for later
         eyesclosed_recording_stop_sound.frameNStart = frameN  # exact frame index
         eyesclosed_recording_stop_sound.tStart = t  # local t and not account for scr refresh
@@ -1420,6 +1667,36 @@ while continueRoutine and routineTimer.getTime() > 0:
             eyesclosed_recording_stop_sound.frameNStop = frameN  # exact frame index
             win.timeOnFlip(eyesclosed_recording_stop_sound, 'tStopRefresh')  # time at next scr refresh
             eyesclosed_recording_stop_sound.stop()
+    
+    # *eyesclosed_recording_skip_keyboard* updates
+    waitOnFlip = False
+    if eyesclosed_recording_skip_keyboard.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # keep track of start time/frame for later
+        eyesclosed_recording_skip_keyboard.frameNStart = frameN  # exact frame index
+        eyesclosed_recording_skip_keyboard.tStart = t  # local t and not account for scr refresh
+        eyesclosed_recording_skip_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
+        win.timeOnFlip(eyesclosed_recording_skip_keyboard, 'tStartRefresh')  # time at next scr refresh
+        eyesclosed_recording_skip_keyboard.status = STARTED
+        # keyboard checking is just starting
+        waitOnFlip = True
+        win.callOnFlip(eyesclosed_recording_skip_keyboard.clock.reset)  # t=0 on next screen flip
+        win.callOnFlip(eyesclosed_recording_skip_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
+    if eyesclosed_recording_skip_keyboard.status == STARTED:
+        # is it time to stop? (based on global clock, using actual start)
+        if tThisFlipGlobal > eyesclosed_recording_skip_keyboard.tStartRefresh + eyesclosed_duration-frameTolerance:
+            # keep track of stop time/frame for later
+            eyesclosed_recording_skip_keyboard.tStop = t  # not accounting for scr refresh
+            eyesclosed_recording_skip_keyboard.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(eyesclosed_recording_skip_keyboard, 'tStopRefresh')  # time at next scr refresh
+            eyesclosed_recording_skip_keyboard.status = FINISHED
+    if eyesclosed_recording_skip_keyboard.status == STARTED and not waitOnFlip:
+        theseKeys = eyesclosed_recording_skip_keyboard.getKeys(keyList=['s'], waitRelease=False)
+        _eyesclosed_recording_skip_keyboard_allKeys.extend(theseKeys)
+        if len(_eyesclosed_recording_skip_keyboard_allKeys):
+            eyesclosed_recording_skip_keyboard.keys = _eyesclosed_recording_skip_keyboard_allKeys[-1].name  # just the last key pressed
+            eyesclosed_recording_skip_keyboard.rt = _eyesclosed_recording_skip_keyboard_allKeys[-1].rt
+            # a response ends the routine
+            continueRoutine = False
     
     # check for quit (typically the Esc key)
     if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1450,6 +1727,96 @@ thisExp.addData('eyesclosed_recording_start_sound.stopped', eyesclosed_recording
 eyesclosed_recording_stop_sound.stop()  # ensure sound has stopped at end of routine
 thisExp.addData('eyesclosed_recording_stop_sound.started', eyesclosed_recording_stop_sound.tStartRefresh)
 thisExp.addData('eyesclosed_recording_stop_sound.stopped', eyesclosed_recording_stop_sound.tStopRefresh)
+# check responses
+if eyesclosed_recording_skip_keyboard.keys in ['', [], None]:  # No response was made
+    eyesclosed_recording_skip_keyboard.keys = None
+thisExp.addData('eyesclosed_recording_skip_keyboard.keys',eyesclosed_recording_skip_keyboard.keys)
+if eyesclosed_recording_skip_keyboard.keys != None:  # we had a response
+    thisExp.addData('eyesclosed_recording_skip_keyboard.rt', eyesclosed_recording_skip_keyboard.rt)
+thisExp.addData('eyesclosed_recording_skip_keyboard.started', eyesclosed_recording_skip_keyboard.tStartRefresh)
+thisExp.addData('eyesclosed_recording_skip_keyboard.stopped', eyesclosed_recording_skip_keyboard.tStopRefresh)
+thisExp.nextEntry()
+# the Routine "eyesclosed_recording" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
+
+# ------Prepare to start Routine "short_blank"-------
+continueRoutine = True
+routineTimer.add(2.000000)
+# update component parameters for each repeat
+if (not int(expInfo['artifact_recording'])) and artifact_running:
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+
+if (not int(expInfo['eyesclosed_recording'])) and eyesclosed_running:
+    continueRoutine = False
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+
+artifact_running = False
+eyesclosed_running = False
+# keep track of which components have finished
+short_blankComponents = [short_blank_text]
+for thisComponent in short_blankComponents:
+    thisComponent.tStart = None
+    thisComponent.tStop = None
+    thisComponent.tStartRefresh = None
+    thisComponent.tStopRefresh = None
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+# reset timers
+t = 0
+_timeToFirstFrame = win.getFutureFlipTime(clock="now")
+short_blankClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
+frameN = -1
+
+# -------Run Routine "short_blank"-------
+while continueRoutine and routineTimer.getTime() > 0:
+    # get current time
+    t = short_blankClock.getTime()
+    tThisFlip = win.getFutureFlipTime(clock=short_blankClock)
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *short_blank_text* updates
+    if short_blank_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # keep track of start time/frame for later
+        short_blank_text.frameNStart = frameN  # exact frame index
+        short_blank_text.tStart = t  # local t and not account for scr refresh
+        short_blank_text.tStartRefresh = tThisFlipGlobal  # on global time
+        win.timeOnFlip(short_blank_text, 'tStartRefresh')  # time at next scr refresh
+        short_blank_text.setAutoDraw(True)
+    if short_blank_text.status == STARTED:
+        # is it time to stop? (based on global clock, using actual start)
+        if tThisFlipGlobal > short_blank_text.tStartRefresh + 2.0-frameTolerance:
+            # keep track of stop time/frame for later
+            short_blank_text.tStop = t  # not accounting for scr refresh
+            short_blank_text.frameNStop = frameN  # exact frame index
+            win.timeOnFlip(short_blank_text, 'tStopRefresh')  # time at next scr refresh
+            short_blank_text.setAutoDraw(False)
+    
+    # check for quit (typically the Esc key)
+    if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in short_blankComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "short_blank"-------
+for thisComponent in short_blankComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+thisExp.addData('short_blank_text.started', short_blank_text.tStartRefresh)
+thisExp.addData('short_blank_text.stopped', short_blank_text.tStopRefresh)
 
 # ------Prepare to start Routine "goodbye_screen"-------
 continueRoutine = True
@@ -1509,12 +1876,21 @@ while continueRoutine:
         goodbye_screen_keyboard.tStartRefresh = tThisFlipGlobal  # on global time
         win.timeOnFlip(goodbye_screen_keyboard, 'tStartRefresh')  # time at next scr refresh
         goodbye_screen_keyboard.status = STARTED
+        # AllowedKeys looks like a variable named `continue_button`
+        if not type(continue_button) in [list, tuple, np.ndarray]:
+            if not isinstance(continue_button, str):
+                logging.error('AllowedKeys variable `continue_button` is not string- or list-like.')
+                core.quit()
+            elif not ',' in continue_button:
+                continue_button = (continue_button,)
+            else:
+                continue_button = eval(continue_button)
         # keyboard checking is just starting
         waitOnFlip = True
         win.callOnFlip(goodbye_screen_keyboard.clock.reset)  # t=0 on next screen flip
         win.callOnFlip(goodbye_screen_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
     if goodbye_screen_keyboard.status == STARTED and not waitOnFlip:
-        theseKeys = goodbye_screen_keyboard.getKeys(keyList=['space'], waitRelease=False)
+        theseKeys = goodbye_screen_keyboard.getKeys(keyList=list(continue_button), waitRelease=False)
         _goodbye_screen_keyboard_allKeys.extend(theseKeys)
         if len(_goodbye_screen_keyboard_allKeys):
             goodbye_screen_keyboard.keys = _goodbye_screen_keyboard_allKeys[-1].name  # just the last key pressed
