@@ -64,8 +64,9 @@ Resting_Paradigm/
 2. Open the appropriate `.psyexp` file in PsychoPy Builder:
    - `resting_task_v2026.psyexp` for PsychoPy >= 2026.1.1
    - `resting_task_v2021.psyexp` for PsychoPy 2021.2.2
-3. Click the **Run** button in the Builder, or run the corresponding `.py` script directly.
-4. Fill in the participant dialog:
+3. Adjust the presentation modalities (screen size or full screen etc.) according to your setup. Also adjust the trigger presentations according to your setup (see section Trigger).
+4. Click the **Run** button in the Builder, or run the corresponding `.py` script directly.
+5. Fill in the participant dialog:
 
    | Field                  | Description                                | Default    |
    |------------------------|--------------------------------------------|------------|
@@ -77,11 +78,14 @@ Resting_Paradigm/
    | artifact_recording     | Run artifact phase (1 = yes, 0 = no)       | `1`        |
    | eyesclosed_recording   | Run eyes-closed phase (1 = yes, 0 = no)    | `1`        |
 
-5. Data files are saved to the `data/` folder with the naming convention:
+6. Data files are saved to the `data/` folder with the naming convention:
    ```
    data/<participant>_resting_task_<version>_<phases>_<date>
    ```
-   where `<phases>` encodes which phases were run (e.g., `eyeop_eyecl_artfrec`).
+   where `<phases>` encodes which phases were run:
+   - `eyeop_eyecl_`: recording also contains an eyes closed part
+   - `eyeop_artfrec_`: recording also contains an artifact recording
+   - `eyeop_eyecl_artfrec`: reording contains all parts
 
 ## Customization
 
