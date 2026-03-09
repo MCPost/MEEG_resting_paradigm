@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.1),
-    on März 09, 2026, at 15:49
+    on März 09, 2026, at 19:10
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -77,7 +77,7 @@ or run the experiment with `--pilot` as an argument. To change what pilot
 PILOTING = core.setPilotModeFromArgs()
 # start off with values from experiment settings
 _fullScr = False
-_winSize = (1024, 768)
+_winSize = (1536, 864)
 # if in pilot mode, apply overrides according to preferences
 if PILOTING:
     # force windowed mode
@@ -1307,7 +1307,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # update/draw components on each frame
             # Run 'Each Frame' code from countdown_code
             if (t >= add_time - frameTolerance):
-                countdown_counter -= 1
+                countdown_counter = np.max([countdown_counter - 1, 1])
                 add_time += countdown_time
             
             # *countdown_text* updates
@@ -1969,7 +1969,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from countdown_code
         if (t >= add_time - frameTolerance):
-            countdown_counter -= 1
+            countdown_counter = np.max([countdown_counter - 1, 1])
             add_time += countdown_time
         
         # *countdown_text* updates
@@ -2655,7 +2655,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update/draw components on each frame
         # Run 'Each Frame' code from countdown_code
         if (t >= add_time - frameTolerance):
-            countdown_counter -= 1
+            countdown_counter = np.max([countdown_counter - 1, 1])
             add_time += countdown_time
         
         # *countdown_text* updates
@@ -2791,6 +2791,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from eyesclosed_recording_code
+        if t >= eyesclosed_duration-frameTolerance:
+            _eyesclosed_recording_skip_keyboard_allKeys.extend('s')
         
         # *eyesclosed_recording_polygon* updates
         
@@ -2814,8 +2817,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         
         # if eyesclosed_recording_polygon is stopping this frame...
         if eyesclosed_recording_polygon.status == STARTED:
-            # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > eyesclosed_recording_polygon.tStartRefresh + eyesclosed_duration-frameTolerance:
+            if bool(len(_eyesclosed_recording_skip_keyboard_allKeys)):
                 # keep track of stop time/frame for later
                 eyesclosed_recording_polygon.tStop = t  # not accounting for scr refresh
                 eyesclosed_recording_polygon.tStopRefresh = tThisFlipGlobal  # on global time
@@ -2857,7 +2859,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # *eyesclosed_recording_stop_sound* updates
         
         # if eyesclosed_recording_stop_sound is starting this frame...
-        if eyesclosed_recording_stop_sound.status == NOT_STARTED and tThisFlip >= eyesclosed_duration - 1.0-frameTolerance:
+        if eyesclosed_recording_stop_sound.status == NOT_STARTED and len(_eyesclosed_recording_skip_keyboard_allKeys):
             # keep track of start time/frame for later
             eyesclosed_recording_stop_sound.frameNStart = frameN  # exact frame index
             eyesclosed_recording_stop_sound.tStart = t  # local t and not account for scr refresh
@@ -2903,8 +2905,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         
         # if eyesclosed_recording_skip_keyboard is stopping this frame...
         if eyesclosed_recording_skip_keyboard.status == STARTED:
-            # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > eyesclosed_recording_skip_keyboard.tStartRefresh + eyesclosed_duration-frameTolerance:
+            if bool(len(_eyesclosed_recording_skip_keyboard_allKeys)):
                 # keep track of stop time/frame for later
                 eyesclosed_recording_skip_keyboard.tStop = t  # not accounting for scr refresh
                 eyesclosed_recording_skip_keyboard.tStopRefresh = tThisFlipGlobal  # on global time
@@ -2921,8 +2922,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 eyesclosed_recording_skip_keyboard.keys = _eyesclosed_recording_skip_keyboard_allKeys[-1].name  # just the last key pressed
                 eyesclosed_recording_skip_keyboard.rt = _eyesclosed_recording_skip_keyboard_allKeys[-1].rt
                 eyesclosed_recording_skip_keyboard.duration = _eyesclosed_recording_skip_keyboard_allKeys[-1].duration
-                # a response ends the routine
-                continueRoutine = False
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
