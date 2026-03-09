@@ -7,7 +7,7 @@
     <Param val="u'data/%s_%s_%s_%s' % (expInfo['participant'], expName, add_info(expInfo), expInfo['date'])" valType="code" updates="None" name="Data filename"/>
     <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
     <Param val="Thank you for your patience." valType="str" updates="None" name="End Message"/>
-    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'gender': 'f', 'date_of_birth': 'DD.MM.YYYY', 'ethnicity': 'asian', 'diagnosis': 'control', 'artifact_recording': '1', 'eyesclosed_recording': '1'}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="{'participant': '', 'gender': 'f', 'date_of_birth': 'DD.MM.YYYY', 'ethnicity': '', 'diagnosis': 'control', 'artifact_recording': '1', 'eyesclosed_recording': '1'}" valType="code" updates="None" name="Experiment info"/>
     <Param val="True" valType="bool" updates="None" name="Force stereo"/>
     <Param val="False" valType="bool" updates="None" name="Full-screen window"/>
     <Param val="" valType="str" updates="None" name="HTML path"/>

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.1),
-    on März 09, 2026, at 15:15
+    on März 09, 2026, at 15:49
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -54,10 +54,10 @@ expVersion = ''
 runAtExit = []
 # information about this experiment
 expInfo = {
-    'participant': f"{randint(0, 999999):06.0f}",
+    'participant': '',
     'gender': 'f',
     'date_of_birth': 'DD.MM.YYYY',
-    'ethnicity': 'asian',
+    'ethnicity': '',
     'diagnosis': 'control',
     'artifact_recording': '1',
     'eyesclosed_recording': '1',
