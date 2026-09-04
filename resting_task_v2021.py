@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2021.2.2),
-    on March 09, 2026, at 18:23
+This experiment was created using PsychoPy3 Experiment Builder (v2021.2.3),
+    on September 04, 2026, at 15:54
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -15,7 +15,7 @@ from __future__ import absolute_import, division
 
 from psychopy import locale_setup
 from psychopy import prefs
-prefs.hardware['audioLib'] = 'pyo'
+prefs.hardware['audioLib'] = 'ptb'
 from psychopy import sound, gui, visual, core, data, event, logging, clock, colors
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
@@ -29,6 +29,7 @@ import sys  # to get file system encoding
 
 from psychopy.hardware import keyboard
 
+from funcs.response import Responder
 # import re for some text substitutions
 import re
 
@@ -47,7 +48,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-psychopyVersion = '2021.2.2'
+psychopyVersion = '2021.2.3'
 expName = 'resting_task_v2021'  # from the Builder filename that created this script
 expInfo = {'participant': '', 'gender': 'f', 'date_of_birth': 'DD.MM.YYYY', 'ethnicity': '', 'diagnosis': 'control', 'artifact_recording': '1', 'eyesclosed_recording': '1'}
 dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
@@ -63,8 +64,8 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s_%s' % (expInfo['participant'], ex
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='C:\\Users\\chris\\ownCloud - postzich@cbs.mpg.de@owncloud.gwdg.de\\Side_Projects\\Resting_Paradigm\\resting_task_v2021.py',
-    savePickle=True, saveWideText=False,
+    originPath='E:\\Christopher\\ownCloud_MPI_GWDG\\Side_Projects\\Resting_Paradigm\\resting_task_v2021.py',
+    savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
 logFile = logging.LogFile(filename+'.log', level=logging.EXP)
@@ -94,6 +95,16 @@ ioDevice = ioConfig = ioSession = ioServer = eyetracker = None
 
 # create a default keyboard (e.g. to check for escape)
 defaultKeyboard = keyboard.Keyboard()
+
+# Initialize components for Routine "setup"
+setupClock = core.Clock()
+from funcs.audio import VPixxTones
+vpixx_tones = VPixxTones(start_freq=660, stop_freq=220, secs=1.0, volume=0.2)
+from funcs.trigger import TriggerPatch, TRIGGER_VALUES
+trigger_patch = TriggerPatch(win)
+trigger_eyes_open = [TRIGGER_VALUES['eyes_open'], 0.0, 0.5]
+trigger_eyes_closed = [TRIGGER_VALUES['eyes_closed'], 0.0, 0.5]
+resp = Responder(defaultKeyboard, use_box=1)
 
 # Initialize components for Routine "welcome_screen"
 welcome_screenClock = core.Clock()
@@ -321,9 +332,62 @@ goodbye_screen_keyboard = keyboard.Keyboard()
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
+# ------Prepare to start Routine "setup"-------
+continueRoutine = True
+# update component parameters for each repeat
+# keep track of which components have finished
+setupComponents = []
+for thisComponent in setupComponents:
+    thisComponent.tStart = None
+    thisComponent.tStop = None
+    thisComponent.tStartRefresh = None
+    thisComponent.tStopRefresh = None
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+# reset timers
+t = 0
+_timeToFirstFrame = win.getFutureFlipTime(clock="now")
+setupClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
+frameN = -1
+
+# -------Run Routine "setup"-------
+while continueRoutine:
+    # get current time
+    t = setupClock.getTime()
+    tThisFlip = win.getFutureFlipTime(clock=setupClock)
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # check for quit (typically the Esc key)
+    if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in setupComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "setup"-------
+for thisComponent in setupComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+# the Routine "setup" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
+
 # ------Prepare to start Routine "welcome_screen"-------
 continueRoutine = True
 # update component parameters for each repeat
+resp.reset()
+pressed_key, react_t = None, None
 welcome_screen_cwb_text.setText(continue_with_button_text)
 welcome_screen_keyboard.keys = []
 welcome_screen_keyboard.rt = []
@@ -351,6 +415,10 @@ while continueRoutine:
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
+    if pressed_key is None:
+        pressed_key, react_t = resp.poll()
+    if pressed_key is not None:
+        continueRoutine = False
     
     # *welcome_screen_text* updates
     if welcome_screen_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -422,6 +490,8 @@ while continueRoutine:
 for thisComponent in welcome_screenComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
+thisExp.addData('button_response', pressed_key)
+thisExp.addData('button_RT', react_t)
 thisExp.addData('welcome_screen_text.started', welcome_screen_text.tStartRefresh)
 thisExp.addData('welcome_screen_text.stopped', welcome_screen_text.tStopRefresh)
 thisExp.addData('welcome_screen_cwb_text.started', welcome_screen_cwb_text.tStartRefresh)
@@ -790,6 +860,8 @@ for thisLoop_artifact_recording in loop_artifact_recording:
     continueRoutine = True
     routineTimer.add(5.000000)
     # update component parameters for each repeat
+    trigger_artifact = [TRIGGER_VALUES[trigger_key], 0.0, 0.5]
+    
     if not int(expInfo['artifact_recording']):
         continueRoutine = False
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
@@ -817,6 +889,13 @@ for thisLoop_artifact_recording in loop_artifact_recording:
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Trigger recording
+        trigger_patch.update(
+            cur_t=tThisFlip, 
+            value=trigger_artifact[0], 
+            t_onset=trigger_artifact[1], 
+            t_offset=trigger_artifact[2],
+        )
         
         # *artifact_recording_text* updates
         if artifact_recording_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -1198,6 +1277,13 @@ while continueRoutine:
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
+    # Trigger recording
+    trigger_patch.update(
+        cur_t=tThisFlip, 
+        value=trigger_eyes_open[0], 
+        t_onset=trigger_eyes_open[1], 
+        t_offset=trigger_eyes_open[2],
+    )
     
     # *eyesopen_recording_polygon* updates
     if eyesopen_recording_polygon.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -1587,6 +1673,9 @@ routineTimer.reset()
 # ------Prepare to start Routine "eyesclosed_recording"-------
 continueRoutine = True
 # update component parameters for each repeat
+_vpixx_start_played = False
+_vpixx_stop_played = False
+
 if not int(expInfo['eyesclosed_recording']):
     continueRoutine = False
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
@@ -1620,6 +1709,20 @@ while continueRoutine:
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
+    if eyesclosed_recording_start_sound.status == STARTED and not _vpixx_start_played:
+        vpixx_tones.play_start()
+        _vpixx_start_played = True
+    if eyesclosed_recording_stop_sound.status == STARTED and not _vpixx_stop_played:
+        vpixx_tones.play_stop()
+        _vpixx_stop_played = True
+    
+    # Trigger recording
+    trigger_patch.update(
+        cur_t=tThisFlip, 
+        value=trigger_eyes_closed[0], 
+        t_onset=trigger_eyes_closed[1], 
+        t_offset=trigger_eyes_closed[2],
+    )
     
     # *eyesclosed_recording_polygon* updates
     if eyesclosed_recording_polygon.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -1630,8 +1733,7 @@ while continueRoutine:
         win.timeOnFlip(eyesclosed_recording_polygon, 'tStartRefresh')  # time at next scr refresh
         eyesclosed_recording_polygon.setAutoDraw(True)
     if eyesclosed_recording_polygon.status == STARTED:
-        # is it time to stop? (based on global clock, using actual start)
-        if tThisFlipGlobal > eyesclosed_recording_polygon.tStartRefresh + eyesclosed_duration-frameTolerance:
+        if bool(len(_eyesclosed_recording_skip_keyboard_allKeys)):
             # keep track of stop time/frame for later
             eyesclosed_recording_polygon.tStop = t  # not accounting for scr refresh
             eyesclosed_recording_polygon.frameNStop = frameN  # exact frame index
@@ -1653,7 +1755,7 @@ while continueRoutine:
             win.timeOnFlip(eyesclosed_recording_start_sound, 'tStopRefresh')  # time at next scr refresh
             eyesclosed_recording_start_sound.stop()
     # start/stop eyesclosed_recording_stop_sound
-    if eyesclosed_recording_stop_sound.status == NOT_STARTED and tThisFlip >= eyesclosed_duration - 1.0-frameTolerance:
+    if eyesclosed_recording_stop_sound.status == NOT_STARTED and len(_eyesclosed_recording_skip_keyboard_allKeys):
         # keep track of start time/frame for later
         eyesclosed_recording_stop_sound.frameNStart = frameN  # exact frame index
         eyesclosed_recording_stop_sound.tStart = t  # local t and not account for scr refresh
@@ -1682,8 +1784,7 @@ while continueRoutine:
         win.callOnFlip(eyesclosed_recording_skip_keyboard.clock.reset)  # t=0 on next screen flip
         win.callOnFlip(eyesclosed_recording_skip_keyboard.clearEvents, eventType='keyboard')  # clear events on next screen flip
     if eyesclosed_recording_skip_keyboard.status == STARTED:
-        # is it time to stop? (based on global clock, using actual start)
-        if tThisFlipGlobal > eyesclosed_recording_skip_keyboard.tStartRefresh + eyesclosed_duration-frameTolerance:
+        if bool(len(_eyesclosed_recording_skip_keyboard_allKeys)):
             # keep track of stop time/frame for later
             eyesclosed_recording_skip_keyboard.tStop = t  # not accounting for scr refresh
             eyesclosed_recording_skip_keyboard.frameNStop = frameN  # exact frame index
@@ -1695,8 +1796,6 @@ while continueRoutine:
         if len(_eyesclosed_recording_skip_keyboard_allKeys):
             eyesclosed_recording_skip_keyboard.keys = _eyesclosed_recording_skip_keyboard_allKeys[-1].name  # just the last key pressed
             eyesclosed_recording_skip_keyboard.rt = _eyesclosed_recording_skip_keyboard_allKeys[-1].rt
-            # a response ends the routine
-            continueRoutine = False
     
     # check for quit (typically the Esc key)
     if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1940,6 +2039,7 @@ routineTimer.reset()
 win.flip()
 
 # these shouldn't be strictly necessary (should auto-save)
+thisExp.saveAsWideText(filename+'.csv', delim='auto')
 thisExp.saveAsPickle(filename)
 logging.flush()
 # make sure everything is closed down

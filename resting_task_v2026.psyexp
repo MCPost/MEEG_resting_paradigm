@@ -101,14 +101,14 @@
         <Param val="# Change this instruction according to your setup!&amp;#10;continue_button = 'space'&amp;#10;continue_with_button_text = 'Weiter mit der Leertaste...'" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="resp.reset() &amp;#10;pressed_key, react_t = None, None" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="if pressed_key is None: &amp;#10;    pressed_key, react_t = resp.poll() &amp;#10;if pressed_key is not None: &amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="thisExp.addData('button_response', pressed_key) &amp;#10;thisExp.addData('button_RT', react_t)" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="welcome_screen_code" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -427,7 +427,7 @@
         <Param val="None" valType="color" updates="constant" name="borderColor"/>
         <Param val="2" valType="num" updates="constant" name="borderWidth"/>
         <Param val="white" valType="color" updates="constant" name="color"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="hex" valType="str" updates="constant" name="colorSpace"/>
         <Param val="1" valType="num" updates="constant" name="contrast"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="False" valType="code" updates="constant" name="draggable"/>
@@ -531,9 +531,9 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if not int(expInfo['artifact_recording']):&amp;#10;    continueRoutine = False&amp;#10;    tThisFlipGlobal = win.getFutureFlipTime(clock=None)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="trigger_artifact = [TRIGGER_VALUES[trigger_key], 0.0, 0.5]&amp;#10;&amp;#10;if not int(expInfo['artifact_recording']):&amp;#10;    continueRoutine = False&amp;#10;    tThisFlipGlobal = win.getFutureFlipTime(clock=None)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# Trigger recording &amp;#10;trigger_patch.update( &amp;#10;    cur_t=tThisFlip,  &amp;#10;    value=trigger_artifact[0],  &amp;#10;    t_onset=trigger_artifact[1],  &amp;#10;    t_offset=trigger_artifact[2], &amp;#10;)" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -622,6 +622,7 @@
         <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
         <Param val="False" valType="bool" updates="constant" name="flipVert"/>
         <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="md" valType="str" updates="None" plugin="None" name="formattingSyntax"/>
         <Param val="False" valType="bool" updates="constant" name="italic"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
         <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
@@ -745,6 +746,7 @@
         <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
         <Param val="False" valType="bool" updates="constant" name="flipVert"/>
         <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="md" valType="str" updates="None" plugin="None" name="formattingSyntax"/>
         <Param val="False" valType="bool" updates="constant" name="italic"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
         <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
@@ -903,7 +905,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="# Trigger recording &amp;#10;trigger_patch.update( &amp;#10;    cur_t=tThisFlip,  &amp;#10;    value=trigger_eyes_open[0],  &amp;#10;    t_onset=trigger_eyes_open[1],  &amp;#10;    t_offset=trigger_eyes_open[2], &amp;#10;)" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -984,9 +986,9 @@
         <Param val="# Duration of Eyes closed resting measure in seconds&amp;#10;eyesclosed_duration = 300 # 300 s = 5 min" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if not int(expInfo['eyesclosed_recording']):&amp;#10;    continueRoutine = False&amp;#10;    tThisFlipGlobal = win.getFutureFlipTime(clock=None)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="_vpixx_start_played = False&amp;#10;_vpixx_stop_played = False&amp;#10;&amp;#10;if not int(expInfo['eyesclosed_recording']):&amp;#10;    continueRoutine = False&amp;#10;    tThisFlipGlobal = win.getFutureFlipTime(clock=None)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="if t &gt;= eyesclosed_duration-frameTolerance:&amp;#10;    _eyesclosed_recording_skip_keyboard_allKeys.extend('s')" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="if eyesclosed_recording_start_sound.status == STARTED and not _vpixx_start_played:&amp;#10;    vpixx_tones.play_start()&amp;#10;    _vpixx_start_played = True&amp;#10;if eyesclosed_recording_stop_sound.status == STARTED and not _vpixx_stop_played:&amp;#10;    vpixx_tones.play_stop()&amp;#10;    _vpixx_stop_played = True&amp;#10;&amp;#10;# Trigger recording&amp;#10;trigger_patch.update(&amp;#10;    cur_t=tThisFlip, &amp;#10;    value=trigger_eyes_closed[0], &amp;#10;    t_onset=trigger_eyes_closed[1], &amp;#10;    t_offset=trigger_eyes_closed[2],&amp;#10;)" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -1144,15 +1146,102 @@
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
     </Routine>
+    <Routine name="setup">
+      <RoutineSettingsComponent name="setup" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="setup" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="compatibility_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# PsychoPy 2024.2.4 (installed in the OPM lab) predates the 'isTrials' kwarg&amp;#10;# that Builder 2026.1.1 adds to TrialHandler2(). Strip it so loop construction&amp;#10;# doesn't crash. isTrials is never read back anywhere in this experiment.&amp;#10;from psychopy import data as _compat_data&amp;#10;&amp;#10;_orig_th2_init = _compat_data.TrialHandler2.__init__&amp;#10;def _th2_init_compat(self, *args, **kwargs):&amp;#10;    kwargs.pop('isTrials', None)&amp;#10;    _orig_th2_init(self, *args, **kwargs)&amp;#10;_compat_data.TrialHandler2.__init__ = _th2_init_compat&amp;#10;print('--- compat: patched TrialHandler2 to drop unsupported isTrials kwarg ---')&amp;#10;&amp;#10;_orig_save_as_pickle = _compat_data.ExperimentHandler.saveAsPickle&amp;#10;def _save_as_pickle_compat(self, *args, **kwargs):&amp;#10;    self.currentRoutine = None&amp;#10;    return _orig_save_as_pickle(self, *args, **kwargs)&amp;#10;_compat_data.ExperimentHandler.saveAsPickle = _save_as_pickle_compat&amp;#10;print('--- compat: patched ExperimentHandler.saveAsPickle to drop currentRoutine before pickling ---')&amp;#10;&amp;#10;if not hasattr(_compat_data.Routine, 'getPlaybackComponents'):&amp;#10;    def _routine_get_playback_components_compat(self):&amp;#10;        return []&amp;#10;    _compat_data.Routine.getPlaybackComponents = _routine_get_playback_components_compat&amp;#10;    print('--- compat: patched Routine.getPlaybackComponents (missing in this PsychoPy version) ---')" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="compatibility_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="trigger_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="from funcs.trigger import TriggerPatch, TRIGGER_VALUES&amp;#10;trigger_patch = TriggerPatch(win)&amp;#10;trigger_eyes_open = [TRIGGER_VALUES['eyes_open'], 0.0, 0.5]&amp;#10;trigger_eyes_closed = [TRIGGER_VALUES['eyes_closed'], 0.0, 0.5]" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="trigger_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="response_setup" plugin="None">
+        <Param val="from funcs.response import Responder" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="resp = Responder(defaultKeyboard, use_box=1)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="response_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="audio_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="from funcs.audio import VPixxTones&amp;#10;vpixx_tones = VPixxTones(start_freq=660, stop_freq=220, secs=1.0, volume=0.2)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="audio_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+    </Routine>
   </Routines>
   <Flow>
+    <Routine name="setup"/>
     <Routine name="welcome_screen"/>
     <Routine name="artifact_instruction"/>
     <LoopInitiator loopType="TrialHandler" name="loop_artifact_recording">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('slide', np.int64(0)), ('text', 'Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n &lt;c=#000000&gt;mit den Augen zu rollen&lt;/c&gt; \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n'), ('short', 'Augen rollen')]), OrderedDict([('slide', np.int64(1)), ('text', 'Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n &lt;c=#000000&gt;mit den Augen zu blinzeln&lt;/c&gt; \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n'), ('short', 'Blinzeln')]), OrderedDict([('slide', np.int64(2)), ('text', 'Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n &lt;c=#000000&gt;die Augen von Links nach Rechts hin und her zu bewegen&lt;/c&gt; \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n'), ('short', 'Augen hin und her bewegen')]), OrderedDict([('slide', np.int64(3)), ('text', 'Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n &lt;c=#000000&gt;den Kiefer anzuspannend und mit den Zähnen zu knirschen&lt;/c&gt; \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n'), ('short', 'Kiefer anspannen und knirschen')]), OrderedDict([('slide', np.int64(4)), ('text', 'Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n &lt;c=#000000&gt;mehrfach hintereinander zu schlucken&lt;/c&gt; \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n'), ('short', 'Schlucken')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="instructions/artifact_instruction.csv" valType="file"/>
-      <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0,1]" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="code"/>
@@ -1168,7 +1257,7 @@
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('slide', np.int64(0)), ('text', 'Vielen Dank, für Ihre Teilnahme! \n\nDamit die Messung ein Erfolg wird, benötigen wir Ihre Mithilfe:\n\nBitte sitzen Sie ruhig und entspannt und &lt;c=#000000&gt;vermeiden Sie unnötige Bewegungen &lt;/c&gt;sowie häufiges &lt;c=#000000&gt;Blinzeln&lt;/c&gt;. Lassen Sie automatisches Blinzeln jedoch zu.\n\n Wenn es unbequem wird, richten Sie sich kurz neu aus, um wieder eine ruhige Position zu finden. \n\nFalls Sie fragen haben, wenden Sie sich bitte an die Studienleitung.\n\nSonst können Sie mit der blauen Taste fortfahren.')]), OrderedDict([('slide', np.int64(1)), ('text', 'Im folgenden nehmen wir eine 5-minütige Ruhemessung vor.\n\nSchauen Sie bitte dabei auf das Kreuz in der Mitte des Bildschirms. \nLassen Sie dabei Ihre Gedanken ziehen und denken Sie an nichts Bestimmtes.\n\nFalls Sie fragen haben, wenden Sie sich bitte an die Studienleitung.\n\nSonst können Sie mit der blauen Taste fortfahren.')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="instructions/eyesopen_instruction.csv" valType="file"/>
-      <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0,1]" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="code"/>
@@ -1184,7 +1273,7 @@
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('slide', np.int64(0)), ('text', 'Vielen Dank, für Ihre Teilnahme! \n\nDamit die Messung ein Erfolg wird, benötigen wir Ihre Mithilfe:\n\nBitte sitzen Sie ruhig und entspannt und &lt;c=#000000&gt;vermeiden Sie unnötige Bewegungen &lt;/c&gt;sowie häufiges &lt;c=#000000&gt;Blinzeln&lt;/c&gt;. Lassen Sie automatisches Blinzeln jedoch zu.\n\n Wenn es unbequem wird, richten Sie sich kurz neu aus, um wieder eine ruhige Position zu finden. \n\nFalls Sie fragen haben, wenden Sie sich bitte an die Studienleitung.\n\nSonst können Sie mit der blauen Taste fortfahren.')]), OrderedDict([('slide', np.int64(1)), ('text', 'Im folgenden nehmen wir eine 5-minütige Ruhemessung vor.\n\nSchauen Sie bitte dabei auf das Kreuz in der Mitte des Bildschirms. \nLassen Sie dabei Ihre Gedanken ziehen und denken Sie an nichts Bestimmtes.\n\nFalls Sie fragen haben, wenden Sie sich bitte an die Studienleitung.\n\nSonst können Sie mit der blauen Taste fortfahren.')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="instructions/eyesclosed_instruction.csv" valType="file"/>
-      <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0,1]" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="code"/>

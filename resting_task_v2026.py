@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.1),
-    on März 09, 2026, at 19:10
+    on September 04, 2026, at 17:19
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -32,6 +32,8 @@ import sys  # to get file system encoding
 
 from psychopy.hardware import keyboard
 
+# Run 'Before Experiment' code from response_setup
+from funcs.response import Responder
 # Run 'Before Experiment' code from welcome_screen_code
 # Additional Info for data file name
 def add_info(expInfo):
@@ -387,6 +389,43 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # Start Code - component code to be run after the window creation
     
+    # --- Initialize components for Routine "setup" ---
+    # Run 'Begin Experiment' code from compatibility_setup
+    # PsychoPy 2024.2.4 (installed in the OPM lab) predates the 'isTrials' kwarg
+    # that Builder 2026.1.1 adds to TrialHandler2(). Strip it so loop construction
+    # doesn't crash. isTrials is never read back anywhere in this experiment.
+    from psychopy import data as _compat_data
+    
+    _orig_th2_init = _compat_data.TrialHandler2.__init__
+    def _th2_init_compat(self, *args, **kwargs):
+        kwargs.pop('isTrials', None)
+        _orig_th2_init(self, *args, **kwargs)
+    _compat_data.TrialHandler2.__init__ = _th2_init_compat
+    print('--- compat: patched TrialHandler2 to drop unsupported isTrials kwarg ---')
+    
+    _orig_save_as_pickle = _compat_data.ExperimentHandler.saveAsPickle
+    def _save_as_pickle_compat(self, *args, **kwargs):
+        self.currentRoutine = None
+        return _orig_save_as_pickle(self, *args, **kwargs)
+    _compat_data.ExperimentHandler.saveAsPickle = _save_as_pickle_compat
+    print('--- compat: patched ExperimentHandler.saveAsPickle to drop currentRoutine before pickling ---')
+    
+    if not hasattr(_compat_data.Routine, 'getPlaybackComponents'):
+        def _routine_get_playback_components_compat(self):
+            return []
+        _compat_data.Routine.getPlaybackComponents = _routine_get_playback_components_compat
+        print('--- compat: patched Routine.getPlaybackComponents (missing in this PsychoPy version) ---')
+    # Run 'Begin Experiment' code from trigger_setup
+    from funcs.trigger import TriggerPatch, TRIGGER_VALUES
+    trigger_patch = TriggerPatch(win)
+    trigger_eyes_open = [TRIGGER_VALUES['eyes_open'], 0.0, 0.5]
+    trigger_eyes_closed = [TRIGGER_VALUES['eyes_closed'], 0.0, 0.5]
+    # Run 'Begin Experiment' code from response_setup
+    resp = Responder(defaultKeyboard, use_box=1)
+    # Run 'Begin Experiment' code from audio_setup
+    from funcs.audio import VPixxTones
+    vpixx_tones = VPixxTones(start_freq=660, stop_freq=220, secs=1.0, volume=0.2)
+    
     # --- Initialize components for Routine "welcome_screen" ---
     # Run 'Begin Experiment' code from welcome_screen_code
     # Change this instruction according to your setup!
@@ -432,7 +471,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
          win, text='', placeholder='Type here...', font='Arial',
          ori=0.0, pos=(0, 0), draggable=False,      letterHeight=0.04,
          size=(1.1, 0.5), borderWidth=2.0,
-         color='white', colorSpace='rgb',
+         color='white', colorSpace='hex',
          opacity=None,
          bold=False, italic=False,
          lineSpacing=1.0, speechPoint=None,
@@ -673,6 +712,92 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
     
+    # --- Prepare to start Routine "setup" ---
+    # create an object to store info about Routine setup
+    setup = data.Routine(
+        name='setup',
+        components=[],
+    )
+    setup.status = NOT_STARTED
+    continueRoutine = True
+    # update component parameters for each repeat
+    # store start times for setup
+    setup.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+    setup.tStart = globalClock.getTime(format='float')
+    setup.status = STARTED
+    thisExp.addData('setup.started', setup.tStart)
+    setup.maxDuration = None
+    # keep track of which components have finished
+    setupComponents = setup.components
+    for thisComponent in setup.components:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "setup" ---
+    thisExp.currentRoutine = setup
+    setup.forceEnded = routineForceEnded = not continueRoutine
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, win=win)
+            return
+        # pause experiment here if requested
+        if thisExp.status == PAUSED:
+            pauseExperiment(
+                thisExp=thisExp, 
+                win=win, 
+                timers=[routineTimer, globalClock], 
+                currentRoutine=setup,
+            )
+            # skip the frame we paused on
+            continue
+        
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
+            setup.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if setup.forceEnded or routineForceEnded:
+            break
+        # has every Component finished?
+        continueRoutine = False
+        for thisComponent in setup.components:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "setup" ---
+    for thisComponent in setup.components:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    # store stop times for setup
+    setup.tStop = globalClock.getTime(format='float')
+    setup.tStopRefresh = tThisFlipGlobal
+    thisExp.addData('setup.stopped', setup.tStop)
+    thisExp.nextEntry()
+    # the Routine "setup" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
     # --- Prepare to start Routine "welcome_screen" ---
     # create an object to store info about Routine welcome_screen
     welcome_screen = data.Routine(
@@ -682,6 +807,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     welcome_screen.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from welcome_screen_code
+    resp.reset() 
+    pressed_key, react_t = None, None
     welcome_screen_cwb_text.setText(continue_with_button_text)
     # create starting attributes for welcome_screen_keyboard
     welcome_screen_keyboard.keys = []
@@ -720,6 +848,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from welcome_screen_code
+        if pressed_key is None: 
+            pressed_key, react_t = resp.poll() 
+        if pressed_key is not None: 
+            continueRoutine = False
         
         # *welcome_screen_text* updates
         
@@ -839,6 +972,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     welcome_screen.tStop = globalClock.getTime(format='float')
     welcome_screen.tStopRefresh = tThisFlipGlobal
     thisExp.addData('welcome_screen.stopped', welcome_screen.tStop)
+    # Run 'End Routine' code from welcome_screen_code
+    thisExp.addData('button_response', pressed_key) 
+    thisExp.addData('button_RT', react_t)
     # check responses
     if welcome_screen_keyboard.keys in ['', [], None]:  # No response was made
         welcome_screen_keyboard.keys = None
@@ -1399,6 +1535,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from artifact_recording_code
+        trigger_artifact = [TRIGGER_VALUES[trigger_key], 0.0, 0.5]
+        
         if not int(expInfo['artifact_recording']):
             continueRoutine = False
             tThisFlipGlobal = win.getFutureFlipTime(clock=None)
@@ -1436,6 +1574,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             tThisFlipGlobal = win.getFutureFlipTime(clock=None)
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
+            # Run 'Each Frame' code from artifact_recording_code
+            # Trigger recording 
+            trigger_patch.update( 
+                cur_t=tThisFlip,  
+                value=trigger_artifact[0],  
+                t_onset=trigger_artifact[1],  
+                t_offset=trigger_artifact[2], 
+            )
             
             # *artifact_recording_text* updates
             
@@ -2095,6 +2241,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # Run 'Each Frame' code from eyesopen_recording_code
+        # Trigger recording 
+        trigger_patch.update( 
+            cur_t=tThisFlip,  
+            value=trigger_eyes_open[0],  
+            t_onset=trigger_eyes_open[1],  
+            t_offset=trigger_eyes_open[2], 
+        )
         
         # *eyesopen_recording_polygon* updates
         
@@ -2748,6 +2902,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     continueRoutine = True
     # update component parameters for each repeat
     # Run 'Begin Routine' code from eyesclosed_recording_code
+    _vpixx_start_played = False
+    _vpixx_stop_played = False
+    
     if not int(expInfo['eyesclosed_recording']):
         continueRoutine = False
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
@@ -2792,8 +2949,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         # Run 'Each Frame' code from eyesclosed_recording_code
-        if t >= eyesclosed_duration-frameTolerance:
-            _eyesclosed_recording_skip_keyboard_allKeys.extend('s')
+        if eyesclosed_recording_start_sound.status == STARTED and not _vpixx_start_played:
+            vpixx_tones.play_start()
+            _vpixx_start_played = True
+        if eyesclosed_recording_stop_sound.status == STARTED and not _vpixx_stop_played:
+            vpixx_tones.play_stop()
+            _vpixx_stop_played = True
+        
+        # Trigger recording
+        trigger_patch.update(
+            cur_t=tThisFlip, 
+            value=trigger_eyes_closed[0], 
+            t_onset=trigger_eyes_closed[1], 
+            t_offset=trigger_eyes_closed[2],
+        )
         
         # *eyesclosed_recording_polygon* updates
         

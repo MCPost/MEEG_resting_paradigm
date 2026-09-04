@@ -1,6 +1,6 @@
-﻿slide;text;short
-0;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>mit den Augen zu rollen</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Augen rollen
-1;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>mit den Augen zu blinzeln</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Blinzeln
-2;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>die Augen von Links nach Rechts hin und her zu bewegen</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Augen hin und her bewegen
-3;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>den Kiefer anzuspannend und mit den Zähnen zu knirschen</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Kiefer anspannen und knirschen
-4;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>mehrfach hintereinander zu schlucken</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Schlucken
+﻿slide;text;short;trigger_key
+0;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>mit den Augen zu rollen</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Augen rollen;eyes_roll
+1;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>mit den Augen zu blinzeln</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Blinzeln;eyes_blink
+2;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>die Augen von Links nach Rechts hin und her zu bewegen</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Augen hin und her bewegen;eyes_saccade
+3;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>den Kiefer anzuspannend und mit den Zähnen zu knirschen</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Kiefer anspannen und knirschen;clench_jaw
+4;Im Folgenden würden wir Sie bitten sobald Sie auf dem Bildschirm aufgefordert werden \n\n <c=#000000>mehrfach hintereinander zu schlucken</c> \n\n Fahren Sie damit fort bis Sie eine neue Anweisungen erhalten. \n\n;Schlucken;swallow
